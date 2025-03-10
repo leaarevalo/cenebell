@@ -2,33 +2,32 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     <div v-if= "!showPatientDetail" class="patients">
-        <h2 class= "patients__title">Pacientes</h2>
+        <h2 class= "patients__title">Insumos</h2>
         
         <section class="patients__search">
-            <v-text-field v-model="inputSearch" class="patients__search__input" label="Buscar por nombre, DNI u obra social" />
+            <v-text-field v-model= "inputSearch" class="patients__search__input" label="Buscar por nombre, tipo u ID" />
             <v-btn color="#1A9A8B" icon="mdi-plus" />
         </section>
         <section class="patients__table">
             <v-data-table
                 :headers="headers"
-                :items="patientsFilter"
+                :items="suppliesFilter"
                 :items-per-page="10"
                 class="elevation-1"
                 :cellProps="{ style: { 'background-color': '#A0DAD0DE' } }"
-                :headerProps="{ style: { 'background-color': '#167A6E' } }"
-                :footerProps="{ style: { 'background-color': '#167A6E' } }"
+                :headerProps="{ style: { 'background-color': '#167A6E', 'text-align': 'center' } }"
             >
                 <template v-slot:no-data>
                     <v-alert :value="true" color="error" icon="mdi-alert">
-                        No se encontraron pacientes
+                        No se encontraron insumos
                     </v-alert>
                 </template>
-                <template v-slot:item.actions="{ item }">
+                <!-- <template v-slot:item.actions="{ item }">
                     <div>
                         <v-icon @click="handlePatientDetail(item)">mdi-eye-outline</v-icon>
                         <v-icon @click="deleteItem(item)">mdi-delete-outline</v-icon>
                     </div> 
-                </template>
+                </template> -->
             </v-data-table>
         </section>
              
@@ -46,70 +45,66 @@ const inputSearch = ref("");
 
 const headers = [
     {
-        title: "Apellido y nombre",
+        title: "ID",
+        align: "center",
+        key: "supplyId"
+    },
+    {
+        title: "Nombre",
         align: "center",
         key: "name"
     },
     {
-        title: "DNI",
+        title: "Tipo",
         align: "center",
-        key: "dni"
+        key: "type"
     },
     {
-        title: "Obra social",
+        title: "Stock",
         align: "center",
-        key: "socialWork"
+        key: "stock",
     },
     {
-        title: "Acciones",
+        title: "Fecha de cad.",
         align: "center",
-        key: "actions",
-        sortable: false
+        key: "expirationDate"
     }
 ];
-const patients = [{
-    name: "Juan Perez",
-    dni: "12345678",
-    socialWork: "OSDE"
-},
-{
-    name: "Maria Rodriguez",
-    dni: "87654321",
-    socialWork: "Swiss Medical"
-},
-{
-    name: "Pedro Gomez",
-    dni: "45678912",
-    socialWork: "Galeno"
-},
-{
-    name: "Juan Perez",
-    dni: "12345678",
-    socialWork: "OSDE"
-},
-{
-    name: "Maria Rodriguez",
-    dni: "87654321",
-    socialWork: "Swiss Medical"
-},
-{
-    name: "Pedro Gomez",
-    dni: "45678912",
-    socialWork: "Galeno"
-}
+const supplies = [
+    {
+        supplyId: "1",
+        name: "Insumo 1",
+        type: "Tipo 1",
+        stock: 10,
+        expirationDate: "01/01/2021"
+    },
+    {
+        supplyId: "2",
+        name: "Insumo 2",
+        type: "Tipo 2",
+        stock: 20,
+        expirationDate: "01/01/2021"
+    },
+    {
+        supplyId: "3",
+        name: "Insumo 3",
+        type: "Tipo 3",
+        stock: 30,
+        expirationDate: "01/01/2021"
+    },
+    {
+        supplyId: "4",
+        name: "Insumo 4",
+        type: "Tipo 4",
+        stock: 40,
+        expirationDate: "01/01/2021"
+    }
 ];
-
-const patientsFilter = computed(() => {
-    return patients.filter((patient) => {
-        return (patient.name.toLowerCase().includes(inputSearch.value.toLowerCase()) || patient.dni.includes(inputSearch.value) || patient.socialWork.toLowerCase().includes(inputSearch.value.toLowerCase()));
+const suppliesFilter = computed(() => {
+    return supplies.filter((supply) => {
+        return (supply.supplyId.includes(inputSearch.value) || supply.name.toLowerCase().includes(inputSearch.value.toLowerCase()) || supply.type.toLowerCase().includes(inputSearch.value.toLowerCase()));
     });
 });
-
-const handlePatientDetail = (patient) => {
-    console.log(patient);
-    patientDetail.value = patient;
-    showPatientDetail.value = true;
-}
 </script>
 
 <style lang="scss" scoped>

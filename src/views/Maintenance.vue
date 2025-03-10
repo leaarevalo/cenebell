@@ -2,25 +2,24 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     <div v-if= "!showPatientDetail" class="patients">
-        <h2 class= "patients__title">Pacientes</h2>
+        <h2 class= "patients__title">Mantenimiento</h2>
         
         <section class="patients__search">
-            <v-text-field v-model="inputSearch" class="patients__search__input" label="Buscar por nombre, DNI u obra social" />
+            <v-text-field v-model= "inputSearch" class="patients__search__input" label="Buscar por numero de serie, tipo de equipo o fabricante" />
             <v-btn color="#1A9A8B" icon="mdi-plus" />
         </section>
         <section class="patients__table">
             <v-data-table
                 :headers="headers"
-                :items="patientsFilter"
+                :items="maintenanceFilter"
                 :items-per-page="10"
                 class="elevation-1"
                 :cellProps="{ style: { 'background-color': '#A0DAD0DE' } }"
-                :headerProps="{ style: { 'background-color': '#167A6E' } }"
-                :footerProps="{ style: { 'background-color': '#167A6E' } }"
+                :headerProps="{ style: { 'background-color': '#167A6E', 'text-align': 'center' } }"
             >
                 <template v-slot:no-data>
                     <v-alert :value="true" color="error" icon="mdi-alert">
-                        No se encontraron pacientes
+                        No se encontraron registros de mantenimiento
                     </v-alert>
                 </template>
                 <template v-slot:item.actions="{ item }">
@@ -46,64 +45,50 @@ const inputSearch = ref("");
 
 const headers = [
     {
-        title: "Apellido y nombre",
+        title: "Numero de serie",
         align: "center",
-        key: "name"
+        key: "serialNumber"
     },
     {
-        title: "DNI",
+        title: "Tipo de equipo",
         align: "center",
-        key: "dni"
+        key: "equipmentType"
     },
     {
-        title: "Obra social",
+        title: "Fabricante",
         align: "center",
-        key: "socialWork"
-    },
-    {
-        title: "Acciones",
-        align: "center",
-        key: "actions",
-        sortable: false
+        key: "manufacturer"
     }
 ];
-const patients = [{
-    name: "Juan Perez",
-    dni: "12345678",
-    socialWork: "OSDE"
-},
-{
-    name: "Maria Rodriguez",
-    dni: "87654321",
-    socialWork: "Swiss Medical"
-},
-{
-    name: "Pedro Gomez",
-    dni: "45678912",
-    socialWork: "Galeno"
-},
-{
-    name: "Juan Perez",
-    dni: "12345678",
-    socialWork: "OSDE"
-},
-{
-    name: "Maria Rodriguez",
-    dni: "87654321",
-    socialWork: "Swiss Medical"
-},
-{
-    name: "Pedro Gomez",
-    dni: "45678912",
-    socialWork: "Galeno"
-}
+const maintenanceList = [
+    {
+        serialNumber: "123456",
+        equipmentType: "Equipo 1",
+        manufacturer: "Fabricante 1"
+    },
+    {
+        serialNumber: "123457",
+        equipmentType: "Equipo 2",
+        manufacturer: "Fabricante 2"
+    },
+    {
+        serialNumber: "123458",
+        equipmentType: "Equipo 3",
+        manufacturer: "Fabricante 3"
+    },
+    {
+        serialNumber: "123459",
+        equipmentType: "Equipo 4",
+        manufacturer: "Fabricante 4"
+    }
 ];
 
-const patientsFilter = computed(() => {
-    return patients.filter((patient) => {
-        return (patient.name.toLowerCase().includes(inputSearch.value.toLowerCase()) || patient.dni.includes(inputSearch.value) || patient.socialWork.toLowerCase().includes(inputSearch.value.toLowerCase()));
+const maintenanceFilter = computed(() => {
+    return maintenanceList.filter((maintenance) => {
+        return (maintenance.serialNumber.includes(inputSearch.value) || maintenance.equipmentType.includes(inputSearch.value) || maintenance.manufacturer.includes(inputSearch.value));
     });
 });
+
 
 const handlePatientDetail = (patient) => {
     console.log(patient);

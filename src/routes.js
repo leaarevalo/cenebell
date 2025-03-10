@@ -2,9 +2,10 @@ import * as VueRouter from "vue-router";
 
 
 const routes = [
-  { path: "/", component: () => import("./components/Login.vue") },
-  { path: "/home", component: () => import("./views/HomeView.vue") },
+  { path: "/", component: () => import("./views/HomeView.vue") },
   { path: "/patients", component: () => import("./views/Patients.vue") },
+  { path: "/supplies", component: () => import("./views/Supplies.vue") },
+  { path: "/maintenance", component: () => import("./views/Maintenance.vue") },
 ];
 
 const router = VueRouter.createRouter({
