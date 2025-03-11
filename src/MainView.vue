@@ -3,7 +3,7 @@
       <v-navigation-drawer
         permanent
         class=""
-        v-if="$route.path !== '/' && $route.path !== '/home'"
+        v-if="$route.path !== '/'"
       >
         <v-list density="compact" nav>
             <v-list-item
