@@ -1,11 +1,7 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
     <div class="patients-treatments">
-        <section class="patients-treatments__header">
-            <v-icon class="patients-treatments__header__icon" @click="handleGoBack()">mdi-arrow-left</v-icon>
-            <h3 class="patients-treatments__header__title">Juan Perez</h3>
-            <h5 class="patients-treatments__header__subtitle">Historial</h5>
-        </section>
+        <Header @goBack="handleGoBack" :title="patient.name" subtitle="Historial" />
         <section>
             <v-data-table
                 :headers="columns"
@@ -38,8 +34,16 @@
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
+import { defineEmits, defineProps } from "vue";
+import Header from "../Header.vue";
 
+
+defineProps({
+    patient: {
+        type: Object,
+        default: null
+    }
+})
 const emit = defineEmits(["goBack"]);
 
 const items = [

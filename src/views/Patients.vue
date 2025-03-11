@@ -1,12 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
-    <div v-if= "!showPatientDetail" class="patients">
+    <div v-if= "!showPatientDetail && !showPatientForm" class="patients">
         <h2 class= "patients__title">Pacientes</h2>
         
         <section class="patients__search">
             <v-text-field v-model="inputSearch" class="patients__search__input" label="Buscar por nombre, DNI u obra social" />
-            <v-btn color="#1A9A8B" icon="mdi-plus" />
+            <v-btn color="#1A9A8B" icon="mdi-plus" @click=handlePatientCreate />
         </section>
         <section class="patients__table">
             <v-data-table
@@ -33,14 +33,17 @@
         </section>
              
     </div>
-    <PatientDetail v-else :patient="patientDetail" @goBack="showPatientDetail = false" />
+    <PatientDetail v-if= "showPatientDetail" :patient="patientDetail" @goBack="showPatientDetail = false" />
+    <PatientForm v-if="showPatientForm" @goBack="showPatientForm = false" @onPatientCreate="handleSavePatient"  />
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
 import PatientDetail from "../components/patients/PatientTreatmentsList.vue";
+import PatientForm from "../components/patients/PatientForm.vue";
 
 const showPatientDetail = ref(false);
+const showPatientForm = ref(false);
 const patientDetail = ref(null);
 const inputSearch = ref("");
 
@@ -67,7 +70,7 @@ const headers = [
         sortable: false
     }
 ];
-const patients = [{
+const patients = ref([{
     name: "Juan Perez",
     dni: "12345678",
     socialWork: "OSDE"
@@ -97,10 +100,10 @@ const patients = [{
     dni: "45678912",
     socialWork: "Galeno"
 }
-];
+]);
 
 const patientsFilter = computed(() => {
-    return patients.filter((patient) => {
+    return patients.value.filter((patient) => {
         return (patient.name.toLowerCase().includes(inputSearch.value.toLowerCase()) || patient.dni.includes(inputSearch.value) || patient.socialWork.toLowerCase().includes(inputSearch.value.toLowerCase()));
     });
 });
@@ -109,6 +112,14 @@ const handlePatientDetail = (patient) => {
     console.log(patient);
     patientDetail.value = patient;
     showPatientDetail.value = true;
+}
+
+const handlePatientCreate = () => {
+    showPatientForm.value = true;
+}
+
+const handleSavePatient = (patient) => {
+    patients.value.push(patient);
 }
 </script>
 
