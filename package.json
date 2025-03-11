@@ -2,7 +2,7 @@
   "name": "cenebell",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://leaarevalo.github.io/",
+  "homepage": "https://leaarevalo.github.io/cenebell/",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
