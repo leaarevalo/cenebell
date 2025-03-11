@@ -14,42 +14,42 @@
             prepend-icon="mdi-home-outline"
             title="Inicio"
             value="home"
-            href="/home"
+            @click="$router({ path: '/'})"
           >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-folder-multiple-outline"
             title="Pacientes"
             value="patients"
-            href="/patients"
+            @click="$router({ path: '/patients'})"
           >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-calendar-month-outline"
             title="Agenda"
             value="appointments"
-            href="/appointments"
+            @click="$router({ path: '/appointments'})"
           >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-text-box-outline"
             title="Insumos"
             value="supplies"
-            href="/supplies"
+            @click="$router({ path: '/supplies'})"
           >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-wrench-outline"
             title="Mantenimiento"
             value="maintenance"
-            href="/maintenance"
+            @click="$router({ path: '/maintenance'})"
           >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-chart-box-outline"
             title="Indicadores"
             value="indicators"
-            href="/indicators"
+            @click="$router({ path: '/indicators'})"
           >
           </v-list-item>
         </v-list>
